@@ -4,7 +4,7 @@ const router = express.Router()
 
 // Controller
 const { addUsers, getUsers, getUser, updateUser, deleteUser } = require('../controllers/user')
-const { getProduct, addProduct } = require('../controllers/product')
+const { getProduct, addProduct, getUserProduct } = require('../controllers/product')
 const { getTransactions, addTransaction } = require('../controllers/transaction')
 
 // Route
@@ -15,6 +15,7 @@ router.patch('/user/:id', updateUser)
 router.delete('/user/:id', deleteUser)
 
 router.get('/products', getProduct)
+router.get('/user-products', getUserProduct)
 router.post('/product', addProduct)
 
 router.get('/transactions', getTransactions)
