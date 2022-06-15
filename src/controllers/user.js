@@ -19,9 +19,53 @@ exports.addUsers = async (req, res) => {
 }
 
 exports.getUsers = async (req, res) => {
-    // code here
+    try {
+
+        const data = await user.findAll({
+            attributes: {
+                exclude: ['password','createdAt','updatedAt']
+            },
+            where: {
+                status: 'Customer'
+            }
+        })
+
+        res.send({
+            status: 'success',
+            data
+        })
+    } catch (error) {
+        console.log(error)
+        res.send({
+            status: 'failed',
+            message: 'Server Error'
+        })
+    }
 }
 
 exports.getUser = async (req, res) => {
-    // code here
+    try {
+
+        const id = req.params.id
+
+        const data = await user.findOne({
+            where: {
+              id: id
+            },
+            attributes: {
+                exclude: ['password','createdAt','updatedAt']
+            }
+          })
+
+        res.send({
+            status: 'success',
+            data
+        })
+    } catch (error) {
+        console.log(error)
+        res.send({
+            status: 'failed',
+            message: 'Server Error'
+        })
+    }
 }

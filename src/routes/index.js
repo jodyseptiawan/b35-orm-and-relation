@@ -4,10 +4,12 @@ const router = express.Router()
 
 // Controller
 // import controller function here
-const { addUsers } = require('../controllers/user')
+const { addUsers, getUser, getUsers } = require('../controllers/user')
 
 // Route
 router.post('/user', addUsers)
+router.get('/users', getUsers)
+router.get('/user/:id', getUser)
 // add route here
 
 module.exports = router
