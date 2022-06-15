@@ -1,4 +1,4 @@
-const { user } = require('../../models')
+const { user, product } = require('../../models')
 
 exports.addUsers = async (req, res) => {
     try {
@@ -46,7 +46,7 @@ exports.getUser = async (req, res) => {
     try {
         const { id } = req.params
 
-        const data = await user.findAll({
+        const data = await user.findOne({
             where: {
                 id
             },
@@ -95,5 +95,36 @@ exports.updateUser = async (req, res) => {
 }
 
 exports.deleteUser = async (req, res) => {
-    // code here
+    try {
+        const { id } = req.params
+
+        const data = await user.findOne({
+            where: {
+                id
+            }
+        })
+
+        if(!data){
+            return res.send({
+                message: `User data with ID: ${id} not found`
+            })
+        }
+
+        await user.destroy({
+            where: {
+                id
+            }
+        })
+
+        res.send({
+            status: 'success',
+            message: `Delete user with id: ${id} finished`,
+        })
+    } catch (error) {
+        console.log(error)
+        res.send({
+            status: 'failed',
+            message: 'Server Error'
+        })
+    }
 }
