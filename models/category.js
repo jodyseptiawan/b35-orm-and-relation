@@ -8,7 +8,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // code here
+      category.belongsToMany(models.product, {
+        as: "products",
+        // through is required in this association
+        through: {
+          model: "productCategory", // this is "bridge" table
+          as: "bridge",
+        },
+        foreignKey: "idCategory",
+      });
     }
   }
   category.init(
