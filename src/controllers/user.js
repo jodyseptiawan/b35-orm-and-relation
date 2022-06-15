@@ -46,7 +46,7 @@ exports.getUser = async (req, res) => {
     try {
         const { id } = req.params
 
-        const data = await user.findAll({
+        const data = await user.findOne({
             where: {
                 id
             },
@@ -71,5 +71,37 @@ exports.getUser = async (req, res) => {
 }
 
 exports.updateUser = async (req, res) => {
-    // code here
+    try {
+        const { id } = req.params
+        const newData = req.body;
+
+        const data = await user.findOne({
+            where: {
+                id
+            }
+        })
+
+        if(!data){
+            return res.send({
+                message: `User with ID: ${id} not found!`
+            })
+        }
+
+        await user.update(newData, {
+            where: {
+                id: id
+            }
+        })
+
+        res.send({
+            status: 'success',
+            message: `Update User data with Id: ${id} finished`
+        })
+    } catch (error) {
+        console.log(error)
+        res.send({
+            status: 'failed',
+            message: 'Server Error'
+        })
+    }
 }
